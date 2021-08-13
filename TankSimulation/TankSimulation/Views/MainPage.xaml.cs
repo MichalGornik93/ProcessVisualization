@@ -5,9 +5,9 @@ using Xamarin.Forms.Xaml;
 
 namespace TankSimulation.Views
 {
-    public partial class VisualizationPage : ContentPage
+    public partial class MainPage : ContentPage
     {
-        public VisualizationPage()
+        public MainPage()
         {
             InitializeComponent();
         }

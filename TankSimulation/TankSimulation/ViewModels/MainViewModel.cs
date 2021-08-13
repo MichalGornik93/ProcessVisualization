@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace TankSimulation.ViewModels
 {
-    public class VisualizationViewModel : BaseViewModel
+    public class MainViewModel : BaseViewModel
     {
         TankSimulationPlcHelper _tankSimulationPlcHelper;
 
@@ -34,10 +34,19 @@ namespace TankSimulation.ViewModels
             await _tankSimulationPlcHelper.StartAuto();
         }
 
-        public VisualizationViewModel()
+        public MainViewModel()
         {
             _tankSimulationPlcHelper = new TankSimulationPlcHelper();
-            _tankSimulationPlcHelper.Connect("192.168.0.89", 0, 0);
+
+            try
+            {
+                _tankSimulationPlcHelper.Connect("192.168.0.89", 0, 0);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
 
             OnPlcValuesRefreshed(null, null);
             _tankSimulationPlcHelper.ValuesRefreshed += OnPlcValuesRefreshed;

@@ -82,8 +82,17 @@
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Wizualizacja">
-        <ShellContent Route="VisualizationPage" ContentTemplate="{DataTemplate local:VisualizationPage}" />
+    <FlyoutItem Title="Główna">
+        <ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Parametry"/>
+
+    <FlyoutItem Title="Status I/O"/>
+
+    <FlyoutItem Title="Wykresy"/>
+
+    <FlyoutItem Title="Diagnostyka"/>
+
+    
 </Shell>
