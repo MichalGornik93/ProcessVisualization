@@ -72,6 +72,18 @@ namespace TankSimulation.Services
                 }
             });
         }
+
+        public void SetPumps(short value)
+        {
+            lock (_locker)
+            {
+                var buffer = new byte[2];
+                buffer = BitConverter.GetBytes(value);
+                int result = _client.DBWrite(1, 10, buffer.Length, buffer);
+                if (result != 0)
+                    throw new Exception(" Write error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
+            }
+        }
      
     }
 }

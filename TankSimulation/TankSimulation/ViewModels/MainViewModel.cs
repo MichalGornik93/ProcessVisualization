@@ -56,6 +56,11 @@ namespace TankSimulation.ViewModels
             StartAutoCommand = new Command(async () => await ExecuteStartAutoCommand());
         }
 
+        public void SetPumps(short value)
+        {
+            _tankSimulationPlcHelper.SetPumps(value);
+        }
+
         private void OnPlcValuesRefreshed(object sender, EventArgs e)
         {
             TankLevel = _tankSimulationPlcHelper.TankLevel;
