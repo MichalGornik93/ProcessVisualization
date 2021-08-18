@@ -12,10 +12,24 @@ namespace TankSimulation.ViewModels
         TankSimulationPlcHelper _tankSimulationPlcHelper;
 
         private double _tankLevel;
-        public double TankLevel
+       public double TankLevel
         {
             get => _tankLevel;
             set => SetProperty(ref _tankLevel, value);
+        }
+
+        private double _flowSpeed;
+        public double FlowSpeed
+        {
+            get => _flowSpeed;
+            set => SetProperty(ref _flowSpeed, value);
+        }
+
+        private double _pumpsSpeed;
+        public double PumpsSpeed
+        {
+            get => _pumpsSpeed;
+            set => SetProperty(ref _pumpsSpeed, value);
         }
         public Command StartPumpCommand { get; }
         private async Task ExecuteStartPumpCommand()
@@ -56,14 +70,21 @@ namespace TankSimulation.ViewModels
             StartAutoCommand = new Command(async () => await ExecuteStartAutoCommand());
         }
 
-        public void SetPumps(short value)
+        public void SetPumpsSpeed(short value)
         {
-            _tankSimulationPlcHelper.SetPumps(value);
+            _tankSimulationPlcHelper.SetPumpsSpeed(value);
+        }
+
+        public void SetFlowSpeed(short value)
+        {
+            _tankSimulationPlcHelper.SetFlowSpeed(value);
         }
 
         private void OnPlcValuesRefreshed(object sender, EventArgs e)
         {
             TankLevel = _tankSimulationPlcHelper.TankLevel;
+            PumpsSpeed = _tankSimulationPlcHelper.PumpsSpeed;
+            FlowSpeed = _tankSimulationPlcHelper.FlowSpeed;
         }
     }
 }

@@ -4,7 +4,6 @@
              x:Class="TankSimulation.Views.MainPage"
              
              xmlns:vm="clr-namespace:TankSimulation.ViewModels" xmlns:local="clr-namespace:TankSimulation"
-             xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              Title="{Binding Title}">
 
     <ContentPage.BindingContext>
@@ -17,38 +16,60 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout Spacing="20" Margin="10">
+    <StackLayout Spacing="10" VerticalOptions="CenterAndExpand">
 
-        <Frame HasShadow="True" CornerRadius="10"  Padding="0" HeightRequest="120" VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="5" >
+      
+        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
             <StackLayout>
-                <Label Text="Sterowanie"/>
-                <StackLayout Orientation="Horizontal">
-                    <Grid VerticalOptions="CenterAndExpand" Margin="5">
-                        <control:ProgressRing   HeightRequest="200" RingProgressColor="Orange" Scale="1" 
-                                            WidthRequest="200" RingThickness="5"  Progress="{Binding TankLevel, Converter={StaticResource ValueProgressBar},Mode=TwoWay}"/>
-                        <StackLayout  VerticalOptions="CenterAndExpand">
-                            <Label FontAttributes="Bold" FontSize="20" VerticalOptions="CenterAndExpand" 
-                               HorizontalOptions="CenterAndExpand" TextColor="Black" Text="{Binding TankLevel, StringFormat='{0} m'}"/>
-                            <Label Text="Poziom wypełnienia" FontSize="Micro" HorizontalTextAlignment="Center"/>
-                        </StackLayout>
-                    </Grid>
-                    <Button Text="Auto" HorizontalOptions="EndAndExpand"/>
-                    
+                <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
+                    <Label Text="Symulacja wypełnienia" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
+                </StackLayout>
+                <StackLayout >
+                    <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding TankLevel, StringFormat='Poziom wypełnienia: {0} m'}"/>
+                    <StackLayout Orientation="Horizontal" >
+                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="LimeGreen" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Button Text="Tryb automatyczny" VerticalOptions="CenterAndExpand" BackgroundColor="LimeGreen" HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
+                    </StackLayout>
+
+                    <ProgressBar  ProgressColor="LimeGreen" HorizontalOptions="FillAndExpand"   
+                                  Margin="10" Progress="{Binding TankLevel, Converter={StaticResource ValueProgressBar}}"></ProgressBar>
                 </StackLayout>
             </StackLayout>
         </Frame>
 
-        <Frame HasShadow="True" CornerRadius="10"  Padding="0" HeightRequest="120" VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="5" >
-            <StackLayout Orientation="Horizontal">
-                <Slider x:Name="Slider" ValueChanged="Slider_ValueChanged" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Minimum="0" Maximum="5" BackgroundColor="Black"/>
-                <Label x:Name="displayLabel"
-               Text="{Binding Source={x:Reference Slider},
-                              Path=Value,
-                              StringFormat='The Slider value is {0:F0}'}"
-               HorizontalOptions="Center"
-               VerticalOptions="CenterAndExpand" />
+        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
+            <StackLayout>
+                <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
+                    <Label Text="Symulacja przepływu" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
+                </StackLayout>
+                <StackLayout >
+                    <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding FlowSpeed, StringFormat='Przepływ: {0} m³/h'}"/>
+                    <StackLayout Orientation="Horizontal" >
+                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="Orange" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Button Text="Przepływ" VerticalOptions="CenterAndExpand" BackgroundColor="Orange" HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
+                    </StackLayout>
+                    <Slider x:Name="FlowSlider" ValueChanged="FlowSlider_ValueChanged" HorizontalOptions="FillAndExpand" 
+                            VerticalOptions="FillAndExpand" Minimum="0" Maximum="5" ThumbColor="Orange"/>
+                </StackLayout>
             </StackLayout>
         </Frame>
 
+        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
+            <StackLayout>
+                <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
+                    <Label Text="Ciśnienie pompy" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
+                </StackLayout>
+                <StackLayout >
+                    <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding PumpsSpeed, StringFormat='Ciśnienie: {0} m³/h'}"/>
+                    <StackLayout Orientation="Horizontal" >
+                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="OrangeRed" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Button Text="Pompa" VerticalOptions="CenterAndExpand" BackgroundColor="OrangeRed" HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
+                    </StackLayout>
+                    <Slider x:Name="PumpsSlider" ValueChanged="PumpsSlider_ValueChanged" HorizontalOptions="FillAndExpand" 
+                            VerticalOptions="FillAndExpand" Minimum="0" Maximum="5" ThumbColor="OrangeRed"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+      
     </StackLayout>
 </ContentPage>

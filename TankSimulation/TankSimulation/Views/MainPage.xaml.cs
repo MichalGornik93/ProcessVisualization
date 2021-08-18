@@ -11,13 +11,22 @@ namespace TankSimulation.Views
         public MainPage()
         {
             InitializeComponent();
+            FlowSlider.Value = 2;
+            PumpsSlider.Value = 2;
         }
 
-        private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
+        private void FlowSlider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
             Slider slider = sender as Slider;
             MainViewModel mainViewModel = (MainViewModel)BindingContext;
-            mainViewModel.SetPumps(Convert.ToInt16(slider.Value));
+            mainViewModel.SetFlowSpeed(Convert.ToInt16(slider.Value));
+        }
+
+        private void PumpsSlider_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            Slider slider = sender as Slider;
+            MainViewModel mainViewModel = (MainViewModel)BindingContext;
+            mainViewModel.SetPumpsSpeed(Convert.ToInt16(slider.Value));
         }
     }
 }
