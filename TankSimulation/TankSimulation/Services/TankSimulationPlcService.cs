@@ -2,16 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TankSimulation.Services
 {
-    class TankSimulationPlcHelper :BaseS7PlcHelper
+    class TankSimulationPlcService :BaseS7PlcService
     {
         public int TankLevel { get; private set; }
         public int PumpsSpeed { get; private set; }
         public int FlowSpeed { get; private set; }
-        public TankSimulationPlcHelper(): base() {}
+        public TankSimulationPlcService(): base() {}
 
         internal override void DbRead()
         {
@@ -32,32 +33,28 @@ namespace TankSimulation.Services
                 }
             }
         }
-        public async Task StartPump()
+        public async Task StartPumpManual()
         {
             await Task.Run(() =>
             {
                 lock (_locker)
                 {
-                    var buffer = new byte[1];
-                    buffer[0] = 1;                   
-                    int result = _client.DBWrite(1, 0, 1, buffer);
-                    if (result != 0)
-                        throw new Exception(" Write error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
+                    WriteBit(1, 0, 0, true);
+                    Thread.Sleep(100);
+                    WriteBit(1, 0, 0, false);
                 }
             });
         }
 
-        public async Task StopPump()
+        public async Task StartFlowManual()
         {
             await Task.Run(() =>
             {
                 lock (_locker)
                 {
-                    var buffer = new byte[1];
-                    buffer[0] = 0;
-                    int result = _client.DBWrite(1, 1, 1, buffer);
-                    if (result != 0)
-                        throw new Exception(" Write error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
+                    WriteBit(1, 0, 1, true);
+                    Thread.Sleep(100);
+                    WriteBit(1, 0, 1, false);
                 }
             });
         }
@@ -68,11 +65,22 @@ namespace TankSimulation.Services
             {
                 lock (_locker)
                 {
-                    var buffer = new byte[1];
-                    buffer[0] = 1;
-                    int result = _client.DBWrite(1, 4, 1, buffer);
-                    if (result != 0)
-                        throw new Exception(" Write error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
+                    WriteBit(1, 0, 2, true);
+                    Thread.Sleep(30);
+                    WriteBit(1, 0, 2, false);
+                }
+            });
+        }
+
+        public async Task StopAuto()
+        {
+            await Task.Run(() =>
+            {
+                lock (_locker)
+                {
+                    WriteBit(1, 0, 3, true);
+                    Thread.Sleep(30);
+                    WriteBit(1, 0, 3, false);
                 }
             });
         }
@@ -81,11 +89,7 @@ namespace TankSimulation.Services
         {
             lock (_locker)
             {
-                var buffer = new byte[2];
-                buffer = BitConverter.GetBytes(value);
-                int result = _client.DBWrite(1, 6, buffer.Length, buffer);
-                if (result != 0)
-                    throw new Exception(" Write error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
+                WriteInt(1, 6, value);
             }
         }
 
@@ -93,9 +97,29 @@ namespace TankSimulation.Services
         {
             lock (_locker)
             {
+                WriteInt(1, 4, value);
+            }
+        }
+
+        private void WriteBit(int db, int pos, int bit, bool value)
+        {
+            lock (_locker)
+            {
+                var buffer = new byte[1];
+                S7.SetBitAt(ref buffer, 0, bit, value);
+                int result = _client.WriteArea(S7Consts.S7AreaDB, db, pos + bit, buffer.Length, S7Consts.S7WLBit, buffer);
+                if (result != 0)
+                    throw new Exception(" Write error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
+            }
+        }
+
+        private void WriteInt(int db, int pos, short value)
+        {
+            lock (_locker)
+            {
                 var buffer = new byte[2];
-                buffer = BitConverter.GetBytes(value);
-                int result = _client.DBWrite(1, 4, buffer.Length, buffer);
+                S7.SetIntAt(buffer, 0, value);
+                int result = _client.DBWrite(db, pos, buffer.Length, buffer);
                 if (result != 0)
                     throw new Exception(" Write error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
             }

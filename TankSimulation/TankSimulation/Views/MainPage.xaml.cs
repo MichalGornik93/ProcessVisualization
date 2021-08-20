@@ -12,7 +12,7 @@ namespace TankSimulation.Views
         {
             InitializeComponent();
             FlowSlider.Value = 2;
-            PumpsSlider.Value = 2;
+            PumpsSlider.Value = 1;
         }
 
         private void FlowSlider_ValueChanged(object sender, ValueChangedEventArgs e)

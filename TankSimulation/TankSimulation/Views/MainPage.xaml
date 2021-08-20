@@ -28,7 +28,10 @@
                     <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding TankLevel, StringFormat='Poziom wypełnienia: {0} m'}"/>
                     <StackLayout Orientation="Horizontal" >
                         <Rectangle WidthRequest="20" HeightRequest="20" Fill="LimeGreen" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                        <Button Text="Tryb automatyczny" VerticalOptions="CenterAndExpand" BackgroundColor="LimeGreen" HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
+                        <Button Text="Start" VerticalOptions="CenterAndExpand" BackgroundColor="LimeGreen" HorizontalOptions="CenterAndExpand" CornerRadius="5" 
+                                Command="{Binding StartAutoCommand, Mode=OneWay}" WidthRequest="95"/>
+                        <Button Text="Stop" VerticalOptions="CenterAndExpand" BackgroundColor="Red" HorizontalOptions="CenterAndExpand" CornerRadius="5" 
+                                Command="{Binding StopAutoCommand, Mode=OneWay}" WidthRequest="95"/>
                     </StackLayout>
 
                     <ProgressBar  ProgressColor="LimeGreen" HorizontalOptions="FillAndExpand"   
@@ -46,7 +49,8 @@
                     <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding FlowSpeed, StringFormat='Przepływ: {0} m³/h'}"/>
                     <StackLayout Orientation="Horizontal" >
                         <Rectangle WidthRequest="20" HeightRequest="20" Fill="Orange" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                        <Button Text="Przepływ" VerticalOptions="CenterAndExpand" BackgroundColor="Orange" HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
+                        <Button Text="Przepływ" VerticalOptions="CenterAndExpand" BackgroundColor="Orange" Command="{Binding StartFlowManualCommand, Mode=OneWay}"
+                                HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
                     </StackLayout>
                     <Slider x:Name="FlowSlider" ValueChanged="FlowSlider_ValueChanged" HorizontalOptions="FillAndExpand" 
                             VerticalOptions="FillAndExpand" Minimum="0" Maximum="5" ThumbColor="Orange"/>
@@ -63,7 +67,8 @@
                     <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding PumpsSpeed, StringFormat='Ciśnienie: {0} m³/h'}"/>
                     <StackLayout Orientation="Horizontal" >
                         <Rectangle WidthRequest="20" HeightRequest="20" Fill="OrangeRed" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                        <Button Text="Pompa" VerticalOptions="CenterAndExpand" BackgroundColor="OrangeRed" HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
+                        <Button Text="Pompa" VerticalOptions="CenterAndExpand" BackgroundColor="OrangeRed" Command="{Binding StartPumpManualCommand, Mode=OneWay}"
+                                HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
                     </StackLayout>
                     <Slider x:Name="PumpsSlider" ValueChanged="PumpsSlider_ValueChanged" HorizontalOptions="FillAndExpand" 
                             VerticalOptions="FillAndExpand" Minimum="0" Maximum="5" ThumbColor="OrangeRed"/>

@@ -4,7 +4,7 @@ using System.Timers;
 
 namespace TankSimulation.Services
 {
-    public abstract class BaseS7PlcHelper
+    public abstract class BaseS7PlcService
     {
         internal readonly S7Client _client;
         private readonly Timer _timer;
@@ -15,7 +15,7 @@ namespace TankSimulation.Services
         public TimeSpan ScanTime { get; private set; }
         public event EventHandler ValuesRefreshed;
 
-        public BaseS7PlcHelper() 
+        public BaseS7PlcService() 
         {
             _client = new S7Client();
             _timer = new Timer();

@@ -9,7 +9,7 @@ namespace TankSimulation.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        TankSimulationPlcHelper _tankSimulationPlcHelper;
+        TankSimulationPlcService _tankSimulationPlcService;
 
         private double _tankLevel;
        public double TankLevel
@@ -31,30 +31,36 @@ namespace TankSimulation.ViewModels
             get => _pumpsSpeed;
             set => SetProperty(ref _pumpsSpeed, value);
         }
-        public Command StartPumpCommand { get; }
-        private async Task ExecuteStartPumpCommand()
+        public Command StartPumpManualCommand { get; }
+        private async Task ExecuteStartPumpManualCommand()
         {
-            await _tankSimulationPlcHelper.StartPump();
+            await _tankSimulationPlcService.StartPumpManual();
         }
-        public Command StopPumpCommand { get; }
-        private async Task ExecuteStopPumpCommand()
+        public Command StartFlowManualCommand { get; }
+        private async Task ExecuteStartFlowManualCommand()
         {
-            await _tankSimulationPlcHelper.StopPump();
+            await _tankSimulationPlcService.StartFlowManual();
         }
         
         public Command StartAutoCommand { get; }
         private async Task ExecuteStartAutoCommand()
         {
-            await _tankSimulationPlcHelper.StartAuto();
+            await _tankSimulationPlcService.StartAuto();
+        }
+
+        public Command StopAutoCommand { get; }
+        private async Task ExecuteStopAutoCommand()
+        {
+            await _tankSimulationPlcService.StopAuto();
         }
 
         public MainViewModel()
         {
-            _tankSimulationPlcHelper = new TankSimulationPlcHelper();
+            _tankSimulationPlcService = new TankSimulationPlcService();
 
             try
             {
-                _tankSimulationPlcHelper.Connect("192.168.0.89", 0, 0);
+                _tankSimulationPlcService.Connect("192.168.0.89", 0, 0);
             }
             catch (Exception ex)
             {
@@ -63,28 +69,29 @@ namespace TankSimulation.ViewModels
             
 
             OnPlcValuesRefreshed(null, null);
-            _tankSimulationPlcHelper.ValuesRefreshed += OnPlcValuesRefreshed;
+            _tankSimulationPlcService.ValuesRefreshed += OnPlcValuesRefreshed;
 
-            StartPumpCommand = new Command(async () => await ExecuteStartPumpCommand());
-            StopPumpCommand = new Command(async () => await ExecuteStopPumpCommand());
+            StartPumpManualCommand = new Command(async () => await ExecuteStartPumpManualCommand());
+            StartFlowManualCommand = new Command(async () => await ExecuteStartFlowManualCommand());
             StartAutoCommand = new Command(async () => await ExecuteStartAutoCommand());
+            StopAutoCommand = new Command(async () => await ExecuteStopAutoCommand());
         }
 
         public void SetPumpsSpeed(short value)
         {
-            _tankSimulationPlcHelper.SetPumpsSpeed(value);
+            _tankSimulationPlcService.SetPumpsSpeed(value);
         }
 
         public void SetFlowSpeed(short value)
         {
-            _tankSimulationPlcHelper.SetFlowSpeed(value);
+            _tankSimulationPlcService.SetFlowSpeed(value);
         }
 
         private void OnPlcValuesRefreshed(object sender, EventArgs e)
         {
-            TankLevel = _tankSimulationPlcHelper.TankLevel;
-            PumpsSpeed = _tankSimulationPlcHelper.PumpsSpeed;
-            FlowSpeed = _tankSimulationPlcHelper.FlowSpeed;
+            TankLevel = _tankSimulationPlcService.TankLevel;
+            PumpsSpeed = _tankSimulationPlcService.PumpsSpeed;
+            FlowSpeed = _tankSimulationPlcService.FlowSpeed;
         }
     }
 }
