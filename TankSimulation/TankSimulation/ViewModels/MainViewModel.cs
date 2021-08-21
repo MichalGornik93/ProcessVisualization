@@ -10,9 +10,10 @@ namespace TankSimulation.ViewModels
     public class MainViewModel : BaseViewModel
     {
         TankSimulationPlcService _tankSimulationPlcService;
+        Page page;
         #region Properties
         private double _tankLevel;
-       public double TankLevel
+        public double TankLevel
         {
             get => _tankLevel;
             set => SetProperty(ref _tankLevel, Math.Round(value, 2, MidpointRounding.AwayFromZero));
@@ -56,46 +57,78 @@ namespace TankSimulation.ViewModels
         public Command StartPumpManualCommand { get; }
         private async Task ExecuteStartPumpManualCommand()
         {
-            await _tankSimulationPlcService.StartPumpManual();
+            try
+            {
+                await _tankSimulationPlcService.StartPumpManual();
+            }
+            catch (Exception)
+            {
+                await page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+            }
+           
         }
         public Command StartFlowManualCommand { get; }
         private async Task ExecuteStartFlowManualCommand()
         {
-            await _tankSimulationPlcService.StartFlowManual();
+            try
+            {
+                await _tankSimulationPlcService.StartFlowManual();
+            }
+            catch (Exception)
+            {
+                await page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+            }
         }
-        
+
         public Command StartAutoCommand { get; }
         private async Task ExecuteStartAutoCommand()
         {
-            await _tankSimulationPlcService.StartAuto();
+            try
+            {
+                await _tankSimulationPlcService.StartAuto();
+            }
+            catch (Exception)
+            {
+                await page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+            }
+            
         }
 
         public Command StopAutoCommand { get; }
         private async Task ExecuteStopAutoCommand()
         {
-            await _tankSimulationPlcService.StopAuto();
+            try
+            {
+                await _tankSimulationPlcService.StopAuto();
+            }
+            catch (Exception)
+            {
+                await page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+            }
+            
         }
 
-        public MainViewModel()
+        public MainViewModel(Page page)
         {
+            this.page = page;
+
             _tankSimulationPlcService = new TankSimulationPlcService();
 
             try
             {
                 _tankSimulationPlcService.Connect("192.168.0.89", 0, 0);
             }
-            catch (Exception ex)
+            catch 
             {
-                Console.WriteLine(ex);
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
             }
-            
-            OnPlcValuesRefreshed(null, null);
-            _tankSimulationPlcService.ValuesRefreshed += OnPlcValuesRefreshed;
-
             StartPumpManualCommand = new Command(async () => await ExecuteStartPumpManualCommand());
             StartFlowManualCommand = new Command(async () => await ExecuteStartFlowManualCommand());
             StartAutoCommand = new Command(async () => await ExecuteStartAutoCommand());
             StopAutoCommand = new Command(async () => await ExecuteStopAutoCommand());
+            OnPlcValuesRefreshed(null, null);
+            _tankSimulationPlcService.ValuesRefreshed += OnPlcValuesRefreshed;
+
         }
 
         public void SetPumpsSpeed(double value)

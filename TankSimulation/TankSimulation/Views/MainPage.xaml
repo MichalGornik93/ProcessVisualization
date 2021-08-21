@@ -5,10 +5,6 @@
              xmlns:vm="clr-namespace:TankSimulation.ViewModels" xmlns:local="clr-namespace:TankSimulation"
              Title="{Binding Title}">
 
-    <ContentPage.BindingContext>
-        <vm:MainViewModel />
-    </ContentPage.BindingContext>
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ProgressBarConverter x:Key="ProgressBar" />
