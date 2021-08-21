@@ -10,8 +10,8 @@ namespace TankSimulation.ViewModels
     public class MainViewModel : BaseViewModel
     {
         TankSimulationPlcService _tankSimulationPlcService;
-
-       private double _tankLevel;
+        #region Properties
+        private double _tankLevel;
        public double TankLevel
         {
             get => _tankLevel;
@@ -39,6 +39,20 @@ namespace TankSimulation.ViewModels
             set => SetProperty(ref _autoState, value);
         }
 
+        private bool _pumpsState;
+        public bool PumpsState
+        {
+            get => _pumpsState;
+            set => SetProperty(ref _pumpsState, value);
+        }
+
+        private bool _flowState;
+        public bool FlowState
+        {
+            get => _flowState;
+            set => SetProperty(ref _flowState, value);
+        }
+        #endregion
         public Command StartPumpManualCommand { get; }
         private async Task ExecuteStartPumpManualCommand()
         {
@@ -75,7 +89,6 @@ namespace TankSimulation.ViewModels
                 Console.WriteLine(ex);
             }
             
-
             OnPlcValuesRefreshed(null, null);
             _tankSimulationPlcService.ValuesRefreshed += OnPlcValuesRefreshed;
 
@@ -100,6 +113,9 @@ namespace TankSimulation.ViewModels
             TankLevel = _tankSimulationPlcService.TankLevel;
             PumpsSpeed = _tankSimulationPlcService.PumpsSpeed;
             FlowSpeed = _tankSimulationPlcService.FlowSpeed;
+            AutoState = _tankSimulationPlcService.AutoState;
+            PumpsState = _tankSimulationPlcService.PumpsState;
+            FlowState = _tankSimulationPlcService.FlowState;
         }
     }
 }

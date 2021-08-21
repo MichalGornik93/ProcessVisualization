@@ -4,18 +4,18 @@ using Xamarin.Forms;
 
 namespace TankSimulation
 {
-    class BooleanToColorConverter : IValueConverter
+    class BooleanToBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool? state = value as bool?;
-            if (state == null)
-                return Color.Gray;
+            if (state == false)
+                return Brush.Red;
 
             if (state == true)
-                return Color.LimeGreen;
+                return Brush.LimeGreen;
 
-            return Color.Gray;
+            return Brush.Black;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

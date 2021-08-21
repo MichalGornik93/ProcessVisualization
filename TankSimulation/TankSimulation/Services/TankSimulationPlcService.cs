@@ -46,7 +46,7 @@ namespace TankSimulation.Services
                 lock (_locker)
                 {
                     WriteBit(1, 0, 0, true);
-                    Thread.Sleep(100);
+                    Thread.Sleep(500);
                     WriteBit(1, 0, 0, false);
                 }
             });
@@ -59,7 +59,7 @@ namespace TankSimulation.Services
                 lock (_locker)
                 {
                     WriteBit(1, 0, 1, true);
-                    Thread.Sleep(100);
+                    Thread.Sleep(500);
                     WriteBit(1, 0, 1, false);
                 }
             });

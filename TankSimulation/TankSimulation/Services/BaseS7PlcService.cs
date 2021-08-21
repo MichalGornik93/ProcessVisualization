@@ -19,7 +19,7 @@ namespace TankSimulation.Services
         {
             _client = new S7Client();
             _timer = new Timer();
-            _timer.Interval = 500;
+            _timer.Interval = 100;
             _timer.Elapsed += OnTimerElapsed; //Start event
         }
 

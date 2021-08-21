@@ -12,7 +12,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ProgressBarConverter x:Key="ProgressBar" />
-            <local:BooleanToColorConverter x:Key="BooleanToColor" />
+            <local:BooleanToBrushConverter x:Key="BooleanToBrush" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -25,9 +25,10 @@
                     <Label Text="Symulacja wypełnienia" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
                 </StackLayout>
                 <StackLayout >
-                    <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding TankLevel, StringFormat='Poziom wypełnienia: {0} m'}"/>
+                    <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" 
+                           Text="{Binding TankLevel, StringFormat='Poziom wypełnienia: {0} m'}"/>
                     <StackLayout Orientation="Horizontal" >
-                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="{Binding AutoState, Converter={StaticResource BooleanToColor}}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Rectangle  WidthRequest="20" HeightRequest="20" Fill="{Binding AutoState, Converter={StaticResource BooleanToBrush}}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Button Text="Start" VerticalOptions="CenterAndExpand" BackgroundColor="LimeGreen" HorizontalOptions="CenterAndExpand" CornerRadius="5" 
                                 Command="{Binding StartAutoCommand, Mode=OneWay}" WidthRequest="95"/>
                         <Button Text="Stop" VerticalOptions="CenterAndExpand" BackgroundColor="Red" HorizontalOptions="CenterAndExpand" CornerRadius="5" 
@@ -48,7 +49,7 @@
                 <StackLayout >
                     <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding FlowSpeed, StringFormat='Przepływ: {0} m³/h'}"/>
                     <StackLayout Orientation="Horizontal" >
-                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="Orange" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="{Binding FlowState, Converter={StaticResource BooleanToBrush}}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Button Text="Przepływ" VerticalOptions="CenterAndExpand" BackgroundColor="Orange" Command="{Binding StartFlowManualCommand, Mode=OneWay}"
                                 HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
                     </StackLayout>
@@ -66,7 +67,7 @@
                 <StackLayout >
                     <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding PumpsSpeed, StringFormat='Ciśnienie: {0} m³/h'}"/>
                     <StackLayout Orientation="Horizontal" >
-                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="OrangeRed" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="{Binding PumpsState, Converter={StaticResource BooleanToBrush}}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Button Text="Pompa" VerticalOptions="CenterAndExpand" BackgroundColor="OrangeRed" Command="{Binding StartPumpManualCommand, Mode=OneWay}"
                                 HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
                     </StackLayout>
