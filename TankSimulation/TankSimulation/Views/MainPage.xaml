@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TankSimulation.Views.MainPage"
-             
              xmlns:vm="clr-namespace:TankSimulation.ViewModels" xmlns:local="clr-namespace:TankSimulation"
              Title="{Binding Title}">
 
@@ -12,7 +11,8 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <local:ValueProgressBarConverter x:Key="ValueProgressBar" />
+            <local:ProgressBarConverter x:Key="ProgressBar" />
+            <local:BooleanToColorConverter x:Key="BooleanToColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -27,7 +27,7 @@
                 <StackLayout >
                     <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding TankLevel, StringFormat='Poziom wypełnienia: {0} m'}"/>
                     <StackLayout Orientation="Horizontal" >
-                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="LimeGreen" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Rectangle WidthRequest="20" HeightRequest="20" Fill="{Binding AutoState, Converter={StaticResource BooleanToColor}}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Button Text="Start" VerticalOptions="CenterAndExpand" BackgroundColor="LimeGreen" HorizontalOptions="CenterAndExpand" CornerRadius="5" 
                                 Command="{Binding StartAutoCommand, Mode=OneWay}" WidthRequest="95"/>
                         <Button Text="Stop" VerticalOptions="CenterAndExpand" BackgroundColor="Red" HorizontalOptions="CenterAndExpand" CornerRadius="5" 
@@ -35,7 +35,7 @@
                     </StackLayout>
 
                     <ProgressBar  ProgressColor="LimeGreen" HorizontalOptions="FillAndExpand"   
-                                  Margin="10" Progress="{Binding TankLevel, Converter={StaticResource ValueProgressBar}}"></ProgressBar>
+                                  Margin="10" Progress="{Binding TankLevel, Converter={StaticResource ProgressBar}}"></ProgressBar>
                 </StackLayout>
             </StackLayout>
         </Frame>

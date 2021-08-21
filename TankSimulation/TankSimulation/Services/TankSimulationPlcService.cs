@@ -9,23 +9,29 @@ namespace TankSimulation.Services
 {
     class TankSimulationPlcService :BaseS7PlcService
     {
-        public int TankLevel { get; private set; }
-        public int PumpsSpeed { get; private set; }
-        public int FlowSpeed { get; private set; }
+        public float TankLevel { get; private set; }
+        public float PumpsSpeed { get; private set; }
+        public float FlowSpeed { get; private set; }
+        public bool AutoState { get; private set; }
+        public bool FlowState { get; private set; }
+        public bool PumpsState { get; private set; }
         public TankSimulationPlcService(): base() {}
 
         internal override void DbRead()
         {
             lock (base._locker)
             {
-                var buffer = new byte[8];
+                var buffer = new byte[15];
                 int result = _client.DBRead(1, 0, buffer.Length, buffer);
                 if (result == 0) //If no error
                 {
                     //Casting byte array to value type
-                    TankLevel = S7.GetIntAt(buffer, 2);
-                    PumpsSpeed = S7.GetIntAt(buffer, 6);
-                    FlowSpeed = S7.GetIntAt(buffer, 4);
+                    TankLevel = S7.GetRealAt(buffer, 2);
+                    PumpsSpeed = S7.GetRealAt(buffer, 10);
+                    FlowSpeed = S7.GetRealAt(buffer, 6);
+                    AutoState = S7.GetBitAt(buffer, 14, 0);
+                    PumpsState = S7.GetBitAt(buffer, 14, 1);
+                    FlowState = S7.GetBitAt(buffer, 14, 2);
                 }
                 else
                 {
@@ -85,19 +91,19 @@ namespace TankSimulation.Services
             });
         }
 
-        public void SetPumpsSpeed(short value)
+        public void SetPumpsSpeed(double value)
         {
             lock (_locker)
             {
-                WriteInt(1, 6, value);
+                WriteReal(1, 10, value);
             }
         }
 
-        public void SetFlowSpeed(short value)
+        public void SetFlowSpeed(double value)
         {
             lock (_locker)
             {
-                WriteInt(1, 4, value);
+                WriteReal(1, 6, value);
             }
         }
 
@@ -119,6 +125,18 @@ namespace TankSimulation.Services
             {
                 var buffer = new byte[2];
                 S7.SetIntAt(buffer, 0, value);
+                int result = _client.DBWrite(db, pos, buffer.Length, buffer);
+                if (result != 0)
+                    throw new Exception(" Write error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
+            }
+        }
+
+        private void WriteReal(int db, int pos, double value)
+        {
+            lock (_locker)
+            {
+                var buffer = new byte[4];
+                S7.SetRealAt(buffer, 0, Convert.ToSingle(value));
                 int result = _client.DBWrite(db, pos, buffer.Length, buffer);
                 if (result != 0)
                     throw new Exception(" Write error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));

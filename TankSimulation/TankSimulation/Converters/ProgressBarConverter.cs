@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace TankSimulation
 {
-    public class ValueProgressBarConverter : IValueConverter
+    public class ProgressBarConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
