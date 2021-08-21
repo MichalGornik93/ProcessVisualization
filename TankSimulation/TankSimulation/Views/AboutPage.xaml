@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TankSimulation.Views.AboutPage"
+             Title="{Binding Title}">
+
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout Padding="20" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <ContentView VerticalOptions="FillAndExpand">
+                    <Image Source="WSTFull.png" VerticalOptions="Center" HeightRequest="100" />
+                </ContentView>
+            </StackLayout>
+        </StackLayout>
+        <ScrollView Grid.Row="1">
+            <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+                <Label Text="Praca inżynierska" FontSize="Title"/>
+                <Label Text="Aplikacja prostych wizualizacji wartości pomiarowych na system Android do urządzeń z rodziny Simatic S7-1200" FontSize="16" Padding="0,0,0,0"/>
+                <Label FontSize="16" Padding="0,24,0,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="Michał Górnik" FontSize="Title" FontAttributes="Bold"/>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+               
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>

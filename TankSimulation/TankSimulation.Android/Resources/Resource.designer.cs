@@ -13590,7 +13590,13 @@ namespace ProcessVisualization.Droid
 			public const int tooltip_frame_light = 2131165329;
 			
 			// aapt resource value: 0x7F070092
-			public const int xamarin_logo = 2131165330;
+			public const int WST = 2131165330;
+			
+			// aapt resource value: 0x7F070093
+			public const int WSTFull = 2131165331;
+			
+			// aapt resource value: 0x7F070094
+			public const int xamarin_logo = 2131165332;
 			
 			static Drawable()
 			{

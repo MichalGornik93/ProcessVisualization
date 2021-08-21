@@ -15,8 +15,8 @@ namespace TankSimulation.Views
             BindingContext = mainViewModel;
             try
             {
-                FlowSlider.Value = 2.0;
-                PumpsSlider.Value = 1.0;
+                FlowSlider.Value = 2.1;
+                PumpsSlider.Value = 1.1;
             }
             catch 
             {
