@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TankSimulation.Views.DiagnosticPage"
+             Visual="Material">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+
+    <StackLayout Spacing="10" VerticalOptions="CenterAndExpand">
+
+        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
+            <StackLayout>
+
+                <Entry Placeholder="Ip address" Text="{Binding PlcIpAddress}" Margin="10" BackgroundColor="White"/>
+                <Entry Placeholder="Connection state" Text="{Binding ConnectionState}" IsReadOnly="True" Margin="10" BackgroundColor="White"/>
+                <Entry Placeholder="Scan time" Text="{Binding ScanTime}" Margin="10" BackgroundColor="White"/>
+                <StackLayout Orientation="Horizontal" Margin="10" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                    <Button Text="Połacz" Command="{Binding ConnectCommand}" Margin="10"/>
+                    <Button Text="Rozłącz" Command="{Binding DisconnectCommand}" Margin="10"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>

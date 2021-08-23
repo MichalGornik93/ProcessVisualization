@@ -1,4 +1,4 @@
-﻿using TankSimulation.Models;
+﻿
 using TankSimulation.Services;
 using System;
 using System.Collections.Generic;
@@ -10,8 +10,6 @@ namespace TankSimulation.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
-
         bool isBusy = false;
         public bool IsBusy
         {

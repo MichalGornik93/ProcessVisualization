@@ -13,7 +13,6 @@ namespace TankSimulation
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 

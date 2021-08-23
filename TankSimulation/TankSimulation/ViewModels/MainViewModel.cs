@@ -1,17 +1,17 @@
 ﻿using TankSimulation.Services;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace TankSimulation.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        #region Properties
+
         TankSimulationPlcService _tankSimulationPlcService;
         Page page;
-        #region Properties
+
         private double _tankLevel;
         public double TankLevel
         {
@@ -54,6 +54,8 @@ namespace TankSimulation.ViewModels
             set => SetProperty(ref _flowState, value);
         }
         #endregion
+
+        #region Commands
         public Command StartPumpManualCommand { get; }
         private async Task ExecuteStartPumpManualCommand()
         {
@@ -107,7 +109,7 @@ namespace TankSimulation.ViewModels
             }
             
         }
-
+        #endregion
         public MainViewModel(Page page)
         {
             this.page = page;
@@ -128,9 +130,9 @@ namespace TankSimulation.ViewModels
             StopAutoCommand = new Command(async () => await ExecuteStopAutoCommand());
             OnPlcValuesRefreshed(null, null);
             _tankSimulationPlcService.ValuesRefreshed += OnPlcValuesRefreshed;
-
         }
 
+       
         public void SetPumpsSpeed(double value)
         {
             _tankSimulationPlcService.SetPumpsSpeed(value);

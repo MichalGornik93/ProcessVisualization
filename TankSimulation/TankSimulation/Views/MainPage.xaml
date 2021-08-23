@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TankSimulation.Views.MainPage"
-             xmlns:vm="clr-namespace:TankSimulation.ViewModels" xmlns:local="clr-namespace:TankSimulation"
-             Title="{Binding Title}">
+             xmlns:local="clr-namespace:TankSimulation"
+             Title="{Binding Title}"
+             Visual="Material">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -14,7 +15,6 @@
 
     <StackLayout Spacing="10" VerticalOptions="CenterAndExpand">
 
-      
         <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
             <StackLayout>
                 <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
@@ -50,7 +50,7 @@
                                 HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
                     </StackLayout>
                     <Slider x:Name="FlowSlider" ValueChanged="FlowSlider_ValueChanged" HorizontalOptions="FillAndExpand" 
-                            VerticalOptions="FillAndExpand" Minimum="0" Maximum="5" ThumbColor="Orange"/>
+                            VerticalOptions="FillAndExpand" Minimum="0" Maximum="5" ThumbColor="Orange" Margin="10"/>
                 </StackLayout>
             </StackLayout>
         </Frame>
@@ -68,7 +68,7 @@
                                 HorizontalOptions="CenterAndExpand" CornerRadius="5" WidthRequest="170"/>
                     </StackLayout>
                     <Slider x:Name="PumpsSlider" ValueChanged="PumpsSlider_ValueChanged" HorizontalOptions="FillAndExpand" 
-                            VerticalOptions="FillAndExpand" Minimum="0" Maximum="5" ThumbColor="OrangeRed"/>
+                            VerticalOptions="FillAndExpand" Minimum="0" Maximum="5" ThumbColor="OrangeRed" Margin="10"/>
                 </StackLayout>
             </StackLayout>
         </Frame>

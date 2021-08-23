@@ -92,7 +92,9 @@
 
     <FlyoutItem Title="Wykresy"/>
 
-    <FlyoutItem Title="Diagnostyka"/>
+    <FlyoutItem Title="Diagnostyka">
+        <ShellContent Route="DiagnosticPage" ContentTemplate="{DataTemplate local:DiagnosticPage}"/>
+    </FlyoutItem>
 
     
 </Shell>

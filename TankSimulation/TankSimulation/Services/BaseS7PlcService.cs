@@ -1,5 +1,6 @@
 ﻿using PlcService.Sharp7;
 using System;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace TankSimulation.Services
@@ -15,11 +16,11 @@ namespace TankSimulation.Services
         public TimeSpan ScanTime { get; private set; }
         public event EventHandler ValuesRefreshed;
 
-        public BaseS7PlcService() 
+        public BaseS7PlcService()
         {
             _client = new S7Client();
             _timer = new Timer();
-            _timer.Interval = 100;
+            _timer.Interval = 200;
             _timer.Elapsed += OnTimerElapsed; //Start event
         }
 
@@ -37,7 +38,7 @@ namespace TankSimulation.Services
                 else
                 {
                     ConnectionState = ConnectionStates.Offline;
-                    throw new Exception(" Connection to S7-1200 error: " + _client.ErrorText(result)+" Time: "+ DateTime.Now.ToString("HH:mm:ss"));
+                    throw new Exception(" Connection to S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
 
                 }
                 OnValuesRefreshed(); //Subscriber event "ValuesRefreshed"
@@ -50,18 +51,23 @@ namespace TankSimulation.Services
             }
         }
 
-        public void Disconnect()
+
+
+        public async Task Disconnect()
         {
-            if (_client.Connected)
+            await Task.Run(() =>
             {
-                _timer.Stop();
-                _client.Disconnect();
-                ConnectionState = ConnectionStates.Offline;
-                OnValuesRefreshed(); //Subscriber event "ValuesRefreshed"
-            }
+                if (_client.Connected)
+                {
+                    _timer.Stop();
+                    _client.Disconnect();
+                    ConnectionState = ConnectionStates.Offline;
+                    OnValuesRefreshed(); //Subscriber event "ValuesRefreshed"
+                }
+            });
         }
 
-        private void OnTimerElapsed(object sender, ElapsedEventArgs e) 
+        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
             try
             {
@@ -77,7 +83,7 @@ namespace TankSimulation.Services
             _lastScanTime = DateTime.Now;
         }
 
-        internal virtual void DbRead() {}
+        internal virtual void DbRead() { }
 
         private void OnValuesRefreshed()
         {
