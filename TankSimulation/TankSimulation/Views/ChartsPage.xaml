@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:Charts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:Class="TankSimulation.Views.ChartsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Charts:ChartView Chart="{Binding LineChart}"
+                          HeightRequest="300"
+                          VerticalOptions="Start"
+                          HorizontalOptions="Fill"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -90,7 +90,9 @@
 
     <FlyoutItem Title="Status I/O"/>
 
-    <FlyoutItem Title="Wykresy"/>
+    <FlyoutItem Title="Wykresy">
+        <ShellContent Route="ChartsPage" ContentTemplate="{DataTemplate local:ChartsPage}"/>
+    </FlyoutItem>
 
     <FlyoutItem Title="Diagnostyka">
         <ShellContent Route="DiagnosticPage" ContentTemplate="{DataTemplate local:DiagnosticPage}"/>
