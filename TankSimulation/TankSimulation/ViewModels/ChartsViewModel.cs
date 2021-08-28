@@ -3,46 +3,70 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using TankSimulation.Helpers;
+using TankSimulation.Services;
 
 namespace TankSimulation.ViewModels
 {
     class ChartsViewModel : BaseViewModel
     {
-        private LineChart lineChart;
-        public LineChart LineChart
+        TankSimulationPlcService _tankSimulationPlcService;
+
+        private List<ChartEntry> tankLevelEntries;
+
+        private LineChart tankLevelChart;
+        public LineChart TankLevelChart
         {
-            get => lineChart;
-            set => SetProperty(ref lineChart, value);
+            get => tankLevelChart;
+            set => SetProperty(ref tankLevelChart, value);
         }
 
-        private string[] months = new string[] { "JAN", "FRB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
-
-        private float[] turnoverData = new float[] { 1000, 5000, 3500, 12000, 9000, 15000, 3000, 0, 0, 0, 0, 0 };
-
-        public ChartsViewModel()
+        public ChartsViewModel() //TODO: Validation
         {
-            InitData();
+            tankLevelEntries = new List<ChartEntry>();
+            _tankSimulationPlcService = new TankSimulationPlcService();
+            _tankSimulationPlcService.Connect("192.168.0.89", 0, 0);  //TODO: Ip like resource
+            OnPlcValuesRefreshed(null, null);
+
+            _tankSimulationPlcService.ValuesRefreshed += OnPlcValuesRefreshed;
         }
 
-        private void InitData()
+        private void OnPlcValuesRefreshed(object sender, EventArgs e)
         {
-            var turnoverEntries = new List<ChartEntry>();
-
-            int i = 0;
-            foreach (var data in turnoverData)
+            if (tankLevelEntries.Count <= 4)
             {
-                turnoverEntries.Add(new ChartEntry(data)
+                tankLevelEntries.Add(new ChartEntry(_tankSimulationPlcService.TankLevel)
                 {
                     Color = SKColor.Parse("#09C"),
-                    ValueLabel = $"{data / 1000} k",
-                    Label = months[i]
+                    ValueLabel = Math.Round(_tankSimulationPlcService.TankLevel, 2, MidpointRounding.AwayFromZero).ToString(),
+                    Label = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} "
                 });
-                i++;
             }
-            LineChart = new LineChart { Entries = turnoverEntries, LabelTextSize = 30f, LabelOrientation = Orientation.Horizontal };
-        }
-        
-    };
+            else
+            {
+                tankLevelEntries = tankLevelEntries.ShiftRight(1);
+                tankLevelEntries.RemoveAt(0);
+                tankLevelEntries.Insert(0, new ChartEntry(_tankSimulationPlcService.TankLevel)
+                {
+                    Color = SKColor.Parse("#09C"),
+                    ValueLabel = Math.Round(_tankSimulationPlcService.TankLevel, 2, MidpointRounding.AwayFromZero).ToString(),
+                    Label = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} "
+                });
+            }
 
+            TankLevelChart = new LineChart
+            {
+                Entries = tankLevelEntries,
+                LabelTextSize = 30f,
+                LabelOrientation = Orientation.Vertical,
+                MaxValue = 5,
+                ValueLabelOrientation = Orientation.Vertical,
+                IsAnimated = false,
+                AnimationDuration = new TimeSpan(0)
+            };
+            Thread.Sleep(500); //TODO: Interval like resource
+        }
+    };
 }
 

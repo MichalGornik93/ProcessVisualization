@@ -5,7 +5,7 @@
              x:Class="TankSimulation.Views.ChartsPage">
     <ContentPage.Content>
         <StackLayout>
-            <Charts:ChartView Chart="{Binding LineChart}"
+            <Charts:ChartView Chart="{Binding TankLevelChart}"
                           HeightRequest="300"
                           VerticalOptions="Start"
                           HorizontalOptions="Fill"/>
