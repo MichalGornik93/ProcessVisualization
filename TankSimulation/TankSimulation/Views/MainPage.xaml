@@ -40,7 +40,7 @@
         <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
             <StackLayout>
                 <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
-                    <Label Text="Symulacja przepływu" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
+                    <Label Text="Przepływ" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
                 </StackLayout>
                 <StackLayout >
                     <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding FlowSpeed, StringFormat='Przepływ: {0} m³/h'}"/>
@@ -58,7 +58,7 @@
         <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
             <StackLayout>
                 <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
-                    <Label Text="Ciśnienie pompy" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
+                    <Label Text="Wydajność pompy" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
                 </StackLayout>
                 <StackLayout >
                     <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding PumpsSpeed, StringFormat='Ciśnienie: {0} m³/h'}"/>

@@ -4,11 +4,29 @@
              xmlns:Charts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="TankSimulation.Views.ChartsPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Charts:ChartView Chart="{Binding TankLevelChart}"
-                          HeightRequest="300"
+ 
+            <StackLayout Margin="10" VerticalOptions="CenterAndExpand">
+            <Label Text="Poziom wypełnienia" VerticalOptions="Center" HorizontalOptions="Center" Margin="5"/>
+                <Charts:ChartView Chart="{Binding TankLevelChart}"
+                          HeightRequest="150"
                           VerticalOptions="Start"
-                          HorizontalOptions="Fill"/>
-        </StackLayout>
+                          HorizontalOptions="Fill"
+                              Margin="5"/>
+
+            <Label Text="Przepływ" VerticalOptions="Center" HorizontalOptions="Center" Margin="5"/>
+                <Charts:ChartView Chart="{Binding FlowChart}"
+                          HeightRequest="150"
+                          VerticalOptions="Start"
+                          HorizontalOptions="Fill"
+                              Margin="5"/>
+
+            <Label Text="Wydajność pompy" VerticalOptions="Center" HorizontalOptions="Center" Margin="5"/>
+                <Charts:ChartView Chart="{Binding PumpChart}"
+                          HeightRequest="150"
+                          VerticalOptions="Start"
+                          HorizontalOptions="Fill"
+                              Margin="5"/>
+            </StackLayout>
+     
     </ContentPage.Content>
 </ContentPage>
