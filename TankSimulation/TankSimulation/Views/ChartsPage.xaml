@@ -14,14 +14,14 @@
                               Margin="5"/>
 
             <Label Text="Przepływ" VerticalOptions="Center" HorizontalOptions="Center" Margin="5"/>
-                <Charts:ChartView Chart="{Binding FlowChart}"
+                <Charts:ChartView Chart="{Binding FlowSpeedChart}"
                           HeightRequest="150"
                           VerticalOptions="Start"
                           HorizontalOptions="Fill"
                               Margin="5"/>
 
             <Label Text="Wydajność pompy" VerticalOptions="Center" HorizontalOptions="Center" Margin="5"/>
-                <Charts:ChartView Chart="{Binding PumpChart}"
+                <Charts:ChartView Chart="{Binding PumpSpeedChart}"
                           HeightRequest="150"
                           VerticalOptions="Start"
                           HorizontalOptions="Fill"

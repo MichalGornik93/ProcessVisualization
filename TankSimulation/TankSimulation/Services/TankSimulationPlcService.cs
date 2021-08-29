@@ -10,28 +10,33 @@ namespace TankSimulation.Services
     class TankSimulationPlcService :BaseS7PlcService
     {
         public float TankLevel { get; private set; }
-        public float PumpsSpeed { get; private set; }
-        public float FlowSpeed { get; private set; }
+        public float ParameterPumpsSpeed { get; private set; }
+        public float ParameterFlowSpeed { get; private set; }
+        public float RealPumpsSpeed { get; private set; }
+        public float RealFlowSpeed { get; private set; }
         public bool AutoState { get; private set; }
         public bool FlowState { get; private set; }
         public bool PumpsState { get; private set; }
+
         public TankSimulationPlcService(): base() {}
 
         internal override void DbRead()
         {
             lock (base._locker)
             {
-                var buffer = new byte[15];
+                var buffer = new byte[24];
                 int result = _client.DBRead(1, 0, buffer.Length, buffer);
                 if (result == 0) //If no error
                 {
                     //Casting byte array to value type
                     TankLevel = S7.GetRealAt(buffer, 2);
-                    PumpsSpeed = S7.GetRealAt(buffer, 10);
-                    FlowSpeed = S7.GetRealAt(buffer, 6);
+                    ParameterPumpsSpeed = S7.GetRealAt(buffer, 10);
+                    ParameterFlowSpeed = S7.GetRealAt(buffer, 6);
                     AutoState = S7.GetBitAt(buffer, 14, 0);
                     PumpsState = S7.GetBitAt(buffer, 14, 1);
                     FlowState = S7.GetBitAt(buffer, 14, 2);
+                    RealFlowSpeed = S7.GetRealAt(buffer, 16);
+                    RealPumpsSpeed = S7.GetRealAt(buffer, 20);
                 }
                 else
                 {

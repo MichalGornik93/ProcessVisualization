@@ -43,7 +43,7 @@
                     <Label Text="Przepływ" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
                 </StackLayout>
                 <StackLayout >
-                    <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding FlowSpeed, StringFormat='Przepływ: {0} m³/h'}"/>
+                    <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding ParameterFlowSpeed, StringFormat='Przepływ zadany: {0} m³/h'}"/>
                     <StackLayout Orientation="Horizontal" >
                         <Rectangle WidthRequest="20" HeightRequest="20" Fill="{Binding FlowState, Converter={StaticResource BooleanToBrush}}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Button Text="Przepływ" VerticalOptions="CenterAndExpand" BackgroundColor="Orange" Command="{Binding StartFlowManualCommand, Mode=OneWay}"
@@ -61,7 +61,7 @@
                     <Label Text="Wydajność pompy" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
                 </StackLayout>
                 <StackLayout >
-                    <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding PumpsSpeed, StringFormat='Ciśnienie: {0} m³/h'}"/>
+                    <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" Text="{Binding ParameterPumpsSpeed, StringFormat='Wydajność zadana: {0} m³/h'}"/>
                     <StackLayout Orientation="Horizontal" >
                         <Rectangle WidthRequest="20" HeightRequest="20" Fill="{Binding PumpsState, Converter={StaticResource BooleanToBrush}}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Button Text="Pompa" VerticalOptions="CenterAndExpand" BackgroundColor="OrangeRed" Command="{Binding StartPumpManualCommand, Mode=OneWay}"

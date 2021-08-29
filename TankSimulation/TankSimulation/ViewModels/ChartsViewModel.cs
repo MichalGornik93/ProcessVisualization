@@ -14,9 +14,9 @@ namespace TankSimulation.ViewModels
 
         private List<ChartEntry> _tankLevelEntries;
 
-        private List<ChartEntry> _flowEntries;
+        private List<ChartEntry> _flowSpeedEntries;
 
-        private List<ChartEntry> _pumpEntries;
+        private List<ChartEntry> _pumpSpeedEntries;
 
         private LineChart _tankLevelChart;
         public LineChart TankLevelChart
@@ -25,25 +25,25 @@ namespace TankSimulation.ViewModels
             set => SetProperty(ref _tankLevelChart, value);
         }
 
-        private LineChart _pumpChart;
-        public LineChart PumpChart
+        private LineChart _pumpSpeedChart;
+        public LineChart PumpSpeedChart
         {
-            get => _pumpChart;
-            set => SetProperty(ref _pumpChart, value);
+            get => _pumpSpeedChart;
+            set => SetProperty(ref _pumpSpeedChart, value);
         }
 
-        private LineChart _flowChart;
-        public LineChart FlowChart
+        private LineChart _flowSpeedChart;
+        public LineChart FlowSpeedChart
         {
-            get => _flowChart;
-            set => SetProperty(ref _flowChart, value);
+            get => _flowSpeedChart;
+            set => SetProperty(ref _flowSpeedChart, value);
         }
 
         public ChartsViewModel() //TODO: Validation
         {
             _tankLevelEntries = new List<ChartEntry>();
-            _flowEntries = new List<ChartEntry>();
-            _pumpEntries = new List<ChartEntry>();
+            _flowSpeedEntries = new List<ChartEntry>();
+            _pumpSpeedEntries = new List<ChartEntry>();
         
             _tankSimulationPlcService = new TankSimulationPlcService();
             _tankSimulationPlcService.Connect("192.168.0.89", 0, 0);  //TODO: Ip like resource
@@ -75,44 +75,44 @@ namespace TankSimulation.ViewModels
                 });
             }
 
-            if (_pumpEntries.Count <=4)
+            if (_pumpSpeedEntries.Count <=4)
             {
-                _pumpEntries.Add(new ChartEntry(_tankSimulationPlcService.PumpsSpeed)
+                _pumpSpeedEntries.Add(new ChartEntry(_tankSimulationPlcService.RealPumpsSpeed)
                 {
                     Color = SKColor.Parse("#CC0000"),
-                    ValueLabel = Math.Round(_tankSimulationPlcService.PumpsSpeed, 2, MidpointRounding.AwayFromZero).ToString()+ "m³/h",
+                    ValueLabel = Math.Round(_tankSimulationPlcService.RealPumpsSpeed, 2, MidpointRounding.AwayFromZero).ToString()+ "m³/h",
                     Label = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} "
                 });
             }
             else
             {
-                _pumpEntries = _pumpEntries.ShiftRight(1);
-                _pumpEntries.RemoveAt(0);
-                _pumpEntries.Insert(0, new ChartEntry(_tankSimulationPlcService.PumpsSpeed)
+                _pumpSpeedEntries = _pumpSpeedEntries.ShiftRight(1);
+                _pumpSpeedEntries.RemoveAt(0);
+                _pumpSpeedEntries.Insert(0, new ChartEntry(_tankSimulationPlcService.RealPumpsSpeed)
                 {
                     Color = SKColor.Parse("#CC0000"),
-                    ValueLabel = Math.Round(_tankSimulationPlcService.PumpsSpeed, 2, MidpointRounding.AwayFromZero).ToString() + "m³/h",
+                    ValueLabel = Math.Round(_tankSimulationPlcService.RealPumpsSpeed, 2, MidpointRounding.AwayFromZero).ToString() + "m³/h",
                     Label = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} "
                 });
             }
 
-            if(_flowEntries.Count <=4)
+            if(_flowSpeedEntries.Count <=4)
             {
-                _flowEntries.Add(new ChartEntry(_tankSimulationPlcService.FlowSpeed)
+                _flowSpeedEntries.Add(new ChartEntry(_tankSimulationPlcService.RealFlowSpeed)
                 {
                     Color = SKColor.Parse("#09C"),
-                    ValueLabel = Math.Round(_tankSimulationPlcService.FlowSpeed, 2, MidpointRounding.AwayFromZero).ToString() + "m³/h",
+                    ValueLabel = Math.Round(_tankSimulationPlcService.RealFlowSpeed, 2, MidpointRounding.AwayFromZero).ToString() + "m³/h",
                     Label = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} "
                 });
             }
             else
             {
-                _flowEntries = _flowEntries.ShiftRight(1);
-                _flowEntries.RemoveAt(0);
-                _flowEntries.Insert(0, new ChartEntry(_tankSimulationPlcService.FlowSpeed)
+                _flowSpeedEntries = _flowSpeedEntries.ShiftRight(1);
+                _flowSpeedEntries.RemoveAt(0);
+                _flowSpeedEntries.Insert(0, new ChartEntry(_tankSimulationPlcService.RealFlowSpeed)
                 {
                     Color = SKColor.Parse("#09C"),
-                    ValueLabel = Math.Round(_tankSimulationPlcService.FlowSpeed, 2, MidpointRounding.AwayFromZero).ToString() + "m³/h",
+                    ValueLabel = Math.Round(_tankSimulationPlcService.RealFlowSpeed, 2, MidpointRounding.AwayFromZero).ToString() + "m³/h",
                     Label = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} "
                 });
             }
@@ -128,9 +128,9 @@ namespace TankSimulation.ViewModels
                 AnimationDuration = new TimeSpan(0)
             };
 
-            PumpChart = new LineChart
+            PumpSpeedChart = new LineChart
             {
-                Entries = _pumpEntries,
+                Entries = _pumpSpeedEntries,
                 LabelTextSize = 30f,
                 LabelOrientation = Orientation.Horizontal,
                 MaxValue = 5,
@@ -139,9 +139,9 @@ namespace TankSimulation.ViewModels
                 AnimationDuration = new TimeSpan(0)
             };
 
-            FlowChart = new LineChart
+            FlowSpeedChart = new LineChart
             {
-                Entries = _flowEntries,
+                Entries = _flowSpeedEntries,
                 LabelTextSize = 30f,
                 LabelOrientation = Orientation.Horizontal,
                 MaxValue = 5,

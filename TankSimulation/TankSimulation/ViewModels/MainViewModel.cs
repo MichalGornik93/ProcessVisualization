@@ -19,18 +19,18 @@ namespace TankSimulation.ViewModels
             set => SetProperty(ref _tankLevel, Math.Round(value, 2, MidpointRounding.AwayFromZero));
         }
 
-        private double _flowSpeed;
-        public double FlowSpeed
+        private double _parameterFlowSpeed;
+        public double ParameterFlowSpeed
         {
-            get => _flowSpeed;
-            set => SetProperty(ref _flowSpeed, Math.Round(value, 2, MidpointRounding.AwayFromZero));
+            get => _parameterFlowSpeed;
+            set => SetProperty(ref _parameterFlowSpeed, Math.Round(value, 2, MidpointRounding.AwayFromZero));
         }
 
-        private double _pumpsSpeed;
-        public double PumpsSpeed
+        private double _parameterPumpsSpeed;
+        public double ParameterPumpsSpeed
         {
-            get => _pumpsSpeed;
-            set => SetProperty(ref _pumpsSpeed, Math.Round(value, 2, MidpointRounding.AwayFromZero));
+            get => _parameterPumpsSpeed;
+            set => SetProperty(ref _parameterPumpsSpeed, Math.Round(value, 2, MidpointRounding.AwayFromZero));
         }
 
         private bool _autoState;
@@ -146,8 +146,8 @@ namespace TankSimulation.ViewModels
         private void OnPlcValuesRefreshed(object sender, EventArgs e)
         {
             TankLevel = _tankSimulationPlcService.TankLevel;
-            PumpsSpeed = _tankSimulationPlcService.PumpsSpeed;
-            FlowSpeed = _tankSimulationPlcService.FlowSpeed;
+            ParameterPumpsSpeed = _tankSimulationPlcService.ParameterPumpsSpeed;
+            ParameterFlowSpeed = _tankSimulationPlcService.ParameterFlowSpeed;
             AutoState = _tankSimulationPlcService.AutoState;
             PumpsState = _tankSimulationPlcService.PumpsState;
             FlowState = _tankSimulationPlcService.FlowState;
