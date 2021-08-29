@@ -44,6 +44,9 @@ namespace TankSimulation.Services
         public bool AutoState { get; private set; }
         public bool FlowState { get; private set; }
         public bool PumpsState { get; private set; }
+        public bool AlarmGlobal { get; set; }
+        public bool AlarmPumpSpeedHigh { get; set; }
+        public bool AlarmFlowSpeedHigh { get; set; }
 
         public TankSimulationPlcService(): base() {}
 
@@ -51,7 +54,7 @@ namespace TankSimulation.Services
         {
             lock (base._locker)
             {
-                var buffer = new byte[24];
+                var buffer = new byte[27];
                 int result = _client.DBRead(1, 0, buffer.Length, buffer);
                 if (result == 0) //If no error
                 {
@@ -64,6 +67,9 @@ namespace TankSimulation.Services
                     FlowState = S7.GetBitAt(buffer, 14, 2);
                     RealFlowSpeed = S7.GetRealAt(buffer, 16);
                     RealPumpsSpeed = S7.GetRealAt(buffer, 20);
+                    AlarmGlobal = S7.GetBitAt(buffer, 26, 1);
+                    AlarmPumpSpeedHigh = S7.GetBitAt(buffer, 24, 1);
+                    AlarmFlowSpeedHigh = S7.GetBitAt(buffer, 24, 0);
                 }
                 else
                 {
