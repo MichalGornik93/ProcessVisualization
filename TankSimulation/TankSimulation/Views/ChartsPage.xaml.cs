@@ -15,7 +15,7 @@ namespace TankSimulation.Views
         public ChartsPage()
         {
             InitializeComponent();
-            var chartsViewModel = new ChartsViewModel();
+            var chartsViewModel = new ChartsViewModel(this);
             BindingContext = chartsViewModel;
         }
     }

@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Threading;
 using TankSimulation.Helpers;
 using TankSimulation.Services;
+using Xamarin.Forms;
 
 namespace TankSimulation.ViewModels
 {
     class ChartsViewModel : BaseViewModel
     {
+        Page page;
         TankSimulationPlcService _tankSimulationPlcService;
 
         private List<ChartEntry> _tankLevelEntries;
@@ -39,14 +41,24 @@ namespace TankSimulation.ViewModels
             set => SetProperty(ref _flowSpeedChart, value);
         }
 
-        public ChartsViewModel() //TODO: Validation
+        public ChartsViewModel(Page page) //TODO: Validation
         {
             _tankLevelEntries = new List<ChartEntry>();
             _flowSpeedEntries = new List<ChartEntry>();
             _pumpSpeedEntries = new List<ChartEntry>();
-        
+
+            this.page = page;
+
             _tankSimulationPlcService = new TankSimulationPlcService();
-            _tankSimulationPlcService.Connect("192.168.0.89", 0, 0);  //TODO: Ip like resource
+
+            try
+            {
+                _tankSimulationPlcService.Connect("192.168.0.89", 0, 0);
+            }
+            catch
+            {
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+            }
             OnPlcValuesRefreshed(null, null);
 
             _tankSimulationPlcService.ValuesRefreshed += OnPlcValuesRefreshed;
@@ -59,7 +71,7 @@ namespace TankSimulation.ViewModels
                 _tankLevelEntries.Add(new ChartEntry(_tankSimulationPlcService.TankLevel)
                 {
                     Color = SKColor.Parse("#09C"),
-                    ValueLabel = Math.Round(_tankSimulationPlcService.TankLevel, 2, MidpointRounding.AwayFromZero).ToString()+ " m",
+                    ValueLabel = Math.Round(_tankSimulationPlcService.TankLevel, 2, MidpointRounding.AwayFromZero).ToString() + " m",
                     Label = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} "
                 });
             }
@@ -75,12 +87,12 @@ namespace TankSimulation.ViewModels
                 });
             }
 
-            if (_pumpSpeedEntries.Count <=4)
+            if (_pumpSpeedEntries.Count <= 4)
             {
                 _pumpSpeedEntries.Add(new ChartEntry(_tankSimulationPlcService.RealPumpsSpeed)
                 {
                     Color = SKColor.Parse("#CC0000"),
-                    ValueLabel = Math.Round(_tankSimulationPlcService.RealPumpsSpeed, 2, MidpointRounding.AwayFromZero).ToString()+ "m³/h",
+                    ValueLabel = Math.Round(_tankSimulationPlcService.RealPumpsSpeed, 2, MidpointRounding.AwayFromZero).ToString() + "m³/h",
                     Label = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} "
                 });
             }
@@ -96,7 +108,7 @@ namespace TankSimulation.ViewModels
                 });
             }
 
-            if(_flowSpeedEntries.Count <=4)
+            if (_flowSpeedEntries.Count <= 4)
             {
                 _flowSpeedEntries.Add(new ChartEntry(_tankSimulationPlcService.RealFlowSpeed)
                 {
@@ -116,39 +128,45 @@ namespace TankSimulation.ViewModels
                     Label = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} "
                 });
             }
-
-            TankLevelChart = new LineChart
+            try
             {
-                Entries = _tankLevelEntries,
-                LabelTextSize = 30f,
-                LabelOrientation = Orientation.Horizontal,
-                MaxValue = 5,
-                ValueLabelOrientation = Orientation.Horizontal,
-                IsAnimated = false,
-                AnimationDuration = new TimeSpan(0)
-            };
+                TankLevelChart = new LineChart
+                {
+                    Entries = _tankLevelEntries,
+                    LabelTextSize = 30f,
+                    LabelOrientation = Orientation.Horizontal,
+                    MaxValue = 5,
+                    ValueLabelOrientation = Orientation.Horizontal,
+                    IsAnimated = false,
+                    AnimationDuration = new TimeSpan(0)
+                };
 
-            PumpSpeedChart = new LineChart
-            {
-                Entries = _pumpSpeedEntries,
-                LabelTextSize = 30f,
-                LabelOrientation = Orientation.Horizontal,
-                MaxValue = 5,
-                ValueLabelOrientation = Orientation.Horizontal,
-                IsAnimated = false,
-                AnimationDuration = new TimeSpan(0)
-            };
+                PumpSpeedChart = new LineChart
+                {
+                    Entries = _pumpSpeedEntries,
+                    LabelTextSize = 30f,
+                    LabelOrientation = Orientation.Horizontal,
+                    MaxValue = 5,
+                    ValueLabelOrientation = Orientation.Horizontal,
+                    IsAnimated = false,
+                    AnimationDuration = new TimeSpan(0)
+                };
 
-            FlowSpeedChart = new LineChart
+                FlowSpeedChart = new LineChart
+                {
+                    Entries = _flowSpeedEntries,
+                    LabelTextSize = 30f,
+                    LabelOrientation = Orientation.Horizontal,
+                    MaxValue = 5,
+                    ValueLabelOrientation = Orientation.Horizontal,
+                    IsAnimated = false,
+                    AnimationDuration = new TimeSpan(0)
+                };
+            }
+            catch
             {
-                Entries = _flowSpeedEntries,
-                LabelTextSize = 30f,
-                LabelOrientation = Orientation.Horizontal,
-                MaxValue = 5,
-                ValueLabelOrientation = Orientation.Horizontal,
-                IsAnimated = false,
-                AnimationDuration = new TimeSpan(0)
-            };
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+            }
 
             Thread.Sleep(2000); //TODO: Interval like resource
         }
