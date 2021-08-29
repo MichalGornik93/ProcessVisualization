@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TankSimulation.Helpers;
 
 namespace TankSimulation.Services
 {
@@ -12,8 +13,34 @@ namespace TankSimulation.Services
         public float TankLevel { get; private set; }
         public float ParameterPumpsSpeed { get; private set; }
         public float ParameterFlowSpeed { get; private set; }
-        public float RealPumpsSpeed { get; private set; }
-        public float RealFlowSpeed { get; private set; }
+
+        private float _realPumpsSpeed;
+        public float RealPumpsSpeed
+        {
+            get { return _realPumpsSpeed; }
+            set 
+            {
+                Random random = new Random();
+                _realPumpsSpeed = value + Convert.ToSingle(random.NextDouble(-0.25, 0.25));
+                if (_realPumpsSpeed < 0)
+                    _realPumpsSpeed = value;
+            }
+        }
+
+        private float _realFlowSpeed;
+
+        public float RealFlowSpeed
+        {
+            get { return _realFlowSpeed; }
+            set 
+            {
+                Random random = new Random();
+                _realFlowSpeed = value + Convert.ToSingle(random.NextDouble(-0.25, 0.25));
+                if (_realFlowSpeed < 0)
+                    _realFlowSpeed = value;
+            }
+        }
+
         public bool AutoState { get; private set; }
         public bool FlowState { get; private set; }
         public bool PumpsState { get; private set; }
