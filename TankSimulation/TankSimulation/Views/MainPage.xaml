@@ -9,20 +9,21 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ProgressBarConverter x:Key="ProgressBar" />
-            <local:BooleanToBrushConverter x:Key="BooleanToBrush" />
+            <local:BooleanToBrushConverter x:Key="BooleanToBrush"/>
+            <local:BooleanToBrushConverterAlarms x:Key="BooleanToBrushAlarms"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout Spacing="10" VerticalOptions="CenterAndExpand">
+    <StackLayout Spacing="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
 
-        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
+        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="10" >
             <StackLayout>
                 <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
                     <Label Text="Symulacja wypełnienia" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
                 </StackLayout>
                 <StackLayout >
                     <Label Margin="10, 0"  HorizontalOptions="StartAndExpand" FontSize="Medium"  TextColor="Black" 
-                           Text="{Binding TankLevel, StringFormat='Poziom wypełnienia: {0} m'}"/>
+                           Text="{Binding TankLevel, StringFormat='Poziom wypełnienia: {0} %'}"/>
                     <StackLayout Orientation="Horizontal" >
                         <Rectangle  WidthRequest="20" HeightRequest="20" Fill="{Binding AutoState, Converter={StaticResource BooleanToBrush}}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Button Text="Start" VerticalOptions="CenterAndExpand" BackgroundColor="LimeGreen" HorizontalOptions="CenterAndExpand" CornerRadius="5" 
@@ -37,7 +38,7 @@
             </StackLayout>
         </Frame>
 
-        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
+        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="10" >
             <StackLayout>
                 <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
                     <Label Text="Przepływ" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
@@ -55,7 +56,7 @@
             </StackLayout>
         </Frame>
 
-        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="20" >
+        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="10" >
             <StackLayout>
                 <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
                     <Label Text="Wydajność pompy" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
@@ -73,11 +74,23 @@
             </StackLayout>
         </Frame>
 
-        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" Margin="10">
-            <Rectangle WidthRequest="20" HeightRequest="20" Margin="10" Fill="{Binding PumpsState, Converter={StaticResource BooleanToBrush}}"/>
-            <Label FontSize="Medium" HeightRequest="20" Margin="10" Text="Alarm:"/>
-            <Label FontSize="Medium" HeightRequest="20" Margin="0, 10" Text="Jakis alarm"/>
-        </StackLayout>
-      
+        <Frame HasShadow="True" CornerRadius="10"  Padding="0"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" Margin="10" >
+            <StackLayout>
+                <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" >
+                    <Label Text="Alarmy" TextColor="White" FontSize="Medium" Margin="2" HorizontalOptions="Center"/>
+                </StackLayout>
+                <StackLayout  Orientation="Horizontal">
+                    <Rectangle WidthRequest="10" HeightRequest="10" Margin="10" Fill="{Binding AlarmGlobal, Converter={StaticResource BooleanToBrushAlarms}}"/>
+                    <ListView  ItemsSource="{Binding AlarmsList}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Message}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+
     </StackLayout>
 </ContentPage>

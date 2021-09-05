@@ -168,7 +168,7 @@ namespace TankSimulation.ViewModels
                 page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
             }
 
-            Thread.Sleep(2000); //TODO: Interval like resource
+            Thread.Sleep(5000); 
         }
     };
 }

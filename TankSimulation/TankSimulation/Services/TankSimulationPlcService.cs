@@ -54,27 +54,40 @@ namespace TankSimulation.Services
         {
             lock (base._locker)
             {
-                var buffer = new byte[27];
-                int result = _client.DBRead(1, 0, buffer.Length, buffer);
-                if (result == 0) //If no error
+                var buffer1 = new byte[24];
+                int result1 = _client.DBRead(1, 0, buffer1.Length, buffer1);
+                if (result1 == 0) //If no error
                 {
                     //Casting byte array to value type
-                    TankLevel = S7.GetRealAt(buffer, 2);
-                    ParameterPumpsSpeed = S7.GetRealAt(buffer, 10);
-                    ParameterFlowSpeed = S7.GetRealAt(buffer, 6);
-                    AutoState = S7.GetBitAt(buffer, 14, 0);
-                    PumpsState = S7.GetBitAt(buffer, 14, 1);
-                    FlowState = S7.GetBitAt(buffer, 14, 2);
-                    RealFlowSpeed = S7.GetRealAt(buffer, 16);
-                    RealPumpsSpeed = S7.GetRealAt(buffer, 20);
-                    AlarmGlobal = S7.GetBitAt(buffer, 26, 1);
-                    AlarmPumpSpeedHigh = S7.GetBitAt(buffer, 24, 1);
-                    AlarmFlowSpeedHigh = S7.GetBitAt(buffer, 24, 0);
+                    TankLevel = S7.GetRealAt(buffer1, 2);
+                    ParameterPumpsSpeed = S7.GetRealAt(buffer1, 10);
+                    ParameterFlowSpeed = S7.GetRealAt(buffer1, 6);
+                    AutoState = S7.GetBitAt(buffer1, 14, 0);
+                    PumpsState = S7.GetBitAt(buffer1, 14, 1);
+                    FlowState = S7.GetBitAt(buffer1, 14, 2);
+                    RealFlowSpeed = S7.GetRealAt(buffer1, 16);
+                    RealPumpsSpeed = S7.GetRealAt(buffer1, 20);
                 }
                 else
                 {
-                    throw new Exception(" Read error S7-1200 error: " + _client.ErrorText(result) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
+                    throw new Exception(" Read error S7-1200 error: " + _client.ErrorText(result1) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
                 }
+
+                var buffer2 = new byte[1];
+                int result2 = _client.DBRead(3, 0, buffer2.Length, buffer2);
+                if (result2 == 0) //If no error
+                {
+                    //Casting byte array to value type
+                    
+                    AlarmGlobal = S7.GetBitAt(buffer2, 0, 0);
+                    AlarmPumpSpeedHigh = S7.GetBitAt(buffer2, 0, 1);
+                    AlarmFlowSpeedHigh = S7.GetBitAt(buffer2, 0, 2);
+                }
+                else
+                {
+                    throw new Exception(" Read error S7-1200 error: " + _client.ErrorText(result2) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
+                }
+
             }
         }
         public async Task StartPumpManual()

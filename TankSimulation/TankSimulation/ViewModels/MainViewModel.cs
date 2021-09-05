@@ -2,6 +2,8 @@
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
+using TankSimulation.Models;
 
 namespace TankSimulation.ViewModels
 {
@@ -11,6 +13,7 @@ namespace TankSimulation.ViewModels
 
         TankSimulationPlcService _tankSimulationPlcService;
         Page page;
+        public ObservableCollection<Alarm> AlarmsList { get; private set; }
 
         private double _tankLevel;
         public double TankLevel
@@ -52,6 +55,13 @@ namespace TankSimulation.ViewModels
         {
             get => _flowState;
             set => SetProperty(ref _flowState, value);
+        }
+
+        private bool _alarmGlobal;
+        public bool AlarmGlobal
+        {
+            get => _alarmGlobal;
+            set => SetProperty(ref _alarmGlobal, value);
         }
         #endregion
 
@@ -114,6 +124,8 @@ namespace TankSimulation.ViewModels
         {
             this.page = page;
 
+            AlarmsList = new ObservableCollection<Alarm>();
+            
             _tankSimulationPlcService = new TankSimulationPlcService();
 
             try
@@ -151,6 +163,15 @@ namespace TankSimulation.ViewModels
             AutoState = _tankSimulationPlcService.AutoState;
             PumpsState = _tankSimulationPlcService.PumpsState;
             FlowState = _tankSimulationPlcService.FlowState;
+            AlarmGlobal = _tankSimulationPlcService.AlarmGlobal;
+
+            AlarmsList.Clear();
+            if (_tankSimulationPlcService.AlarmPumpSpeedHigh)
+                AlarmsList.Add(new Alarm { Message = "Wydajność pompy zbyt wysoka" });
+            if (_tankSimulationPlcService.AlarmFlowSpeedHigh)
+                AlarmsList.Add(new Alarm { Message = "Przepływ zbyt wysoki" });
+            if (!_tankSimulationPlcService.AlarmFlowSpeedHigh && !_tankSimulationPlcService.AlarmPumpSpeedHigh)
+                AlarmsList.Add(new Alarm { Message = "Brak alarmów" });
         }
     }
 }
