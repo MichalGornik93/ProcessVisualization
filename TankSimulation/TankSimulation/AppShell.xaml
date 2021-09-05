@@ -82,19 +82,15 @@
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Główna">
+    <FlyoutItem Title="Główna" Icon="home.png">
         <ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Parametry"/>
-
-    <FlyoutItem Title="Status I/O"/>
-
-    <FlyoutItem Title="Wykresy">
+    <FlyoutItem Title="Wykresy" Icon="bar_chart.png">
         <ShellContent Route="ChartsPage" ContentTemplate="{DataTemplate local:ChartsPage}"/>
     </FlyoutItem>
 
-    <FlyoutItem Title="Diagnostyka">
+    <FlyoutItem Title="Diagnostyka" Icon="tools.png">
         <ShellContent Route="DiagnosticPage" ContentTemplate="{DataTemplate local:DiagnosticPage}"/>
     </FlyoutItem>
 
