@@ -26,7 +26,7 @@ Project is created with:
 ![My image](https://github.com/MichalGornik93/TankSimulation/blob/master/TankSimulation/TankSimulation/Gallery/MainView.gif)
 * Charts page
 
-![My image](https://github.com/MichalGornik93/TankSimulation/blob/master/TankSimulation/TankSimulation/Gallery/MainView.gif)
+![My image](https://github.com/MichalGornik93/TankSimulation/blob/master/TankSimulation/TankSimulation/Gallery/ChartsView.gif)
 * Diagnostic page
 
 ![My image](https://github.com/MichalGornik93/TankSimulation/blob/master/TankSimulation/TankSimulation/Gallery/DiagnosticView.gif)
