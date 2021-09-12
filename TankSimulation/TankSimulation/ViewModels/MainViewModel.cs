@@ -77,7 +77,7 @@ namespace TankSimulation.ViewModels
             {
                 await page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
             }
-           
+
         }
         public Command StartFlowManualCommand { get; }
         private async Task ExecuteStartFlowManualCommand()
@@ -103,7 +103,7 @@ namespace TankSimulation.ViewModels
             {
                 await page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
             }
-            
+
         }
 
         public Command StopAutoCommand { get; }
@@ -117,7 +117,7 @@ namespace TankSimulation.ViewModels
             {
                 await page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
             }
-            
+
         }
         #endregion
         public MainViewModel(Page page)
@@ -125,14 +125,14 @@ namespace TankSimulation.ViewModels
             this.page = page;
 
             AlarmsList = new ObservableCollection<Alarm>();
-            
+
             _tankSimulationPlcService = new TankSimulationPlcService();
 
             try
             {
                 _tankSimulationPlcService.Connect("192.168.0.89", 0, 0);
             }
-            catch 
+            catch
             {
                 page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
             }
@@ -144,15 +144,29 @@ namespace TankSimulation.ViewModels
             _tankSimulationPlcService.ValuesRefreshed += OnPlcValuesRefreshed;
         }
 
-       
+
         public void SetPumpsSpeed(double value)
         {
-            _tankSimulationPlcService.SetPumpsSpeed(value);
+            try
+            {
+                _tankSimulationPlcService.SetPumpsSpeed(value);
+            }
+            catch
+            {
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+            }
         }
 
         public void SetFlowSpeed(double value)
         {
-            _tankSimulationPlcService.SetFlowSpeed(value);
+            try
+            {
+                _tankSimulationPlcService.SetFlowSpeed(value);
+            }
+            catch
+            {
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+            }
         }
 
         private void OnPlcValuesRefreshed(object sender, EventArgs e)

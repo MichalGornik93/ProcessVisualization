@@ -87,7 +87,6 @@ namespace TankSimulation.Services
                 {
                     throw new Exception(" Read error S7-1200 error: " + _client.ErrorText(result2) + " Time: " + DateTime.Now.ToString("HH:mm:ss"));
                 }
-
             }
         }
         public async Task StartPumpManual()
