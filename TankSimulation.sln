@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TankSimulation", "TankSimul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TankSimulation.Android", "TankSimulation\TankSimulation.Android\TankSimulation.Android.csproj", "{72EA1C5B-CA0E-4868-BD80-2478729FB913}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TankSimulation.App", "TankSimulation.App", "{5089A966-2579-42D3-AC47-423D12F6D39A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Desktop\TankSimulation.Android.apk = ..\..\..\Desktop\TankSimulation.Android.apk
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
