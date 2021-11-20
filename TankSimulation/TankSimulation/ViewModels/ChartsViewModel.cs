@@ -57,7 +57,7 @@ namespace TankSimulation.ViewModels
             }
             catch
             {
-                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, upewnij sie ze sterownik znajduje sie w sieci i zresetuj aplikacje", "Ok");
             }
             OnPlcValuesRefreshed(null, null);
 
@@ -165,7 +165,7 @@ namespace TankSimulation.ViewModels
             }
             catch
             {
-                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, upewnij sie ze sterownik znajduje sie w sieci i zresetuj aplikacje", "Ok");
             }
 
             Thread.Sleep(5000); 

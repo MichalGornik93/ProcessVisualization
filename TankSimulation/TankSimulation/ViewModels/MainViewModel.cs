@@ -134,7 +134,7 @@ namespace TankSimulation.ViewModels
             }
             catch
             {
-                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, upewnij sie ze sterownik znajduje sie w sieci i zresetuj aplikacje", "Ok");
             }
             StartPumpManualCommand = new Command(async () => await ExecuteStartPumpManualCommand());
             StartFlowManualCommand = new Command(async () => await ExecuteStartFlowManualCommand());
@@ -153,7 +153,7 @@ namespace TankSimulation.ViewModels
             }
             catch
             {
-                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+                page.DisplayAlert("Alert", "DisplayAlert", "Ok");
             }
         }
 
@@ -165,7 +165,7 @@ namespace TankSimulation.ViewModels
             }
             catch
             {
-                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, zresetuj aplikacje", "Ok");
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, upewnij sie ze sterownik znajduje sie w sieci i zresetuj aplikacje", "Ok");
             }
         }
 
