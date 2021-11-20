@@ -153,7 +153,7 @@ namespace TankSimulation.ViewModels
             }
             catch
             {
-                page.DisplayAlert("Alert", "DisplayAlert", "Ok");
+                page.DisplayAlert("Alert", "Brak połaczenia ze sterownikiem PLC, upewnij sie ze sterownik znajduje sie w sieci i zresetuj aplikacje", "Ok");
             }
         }
 
